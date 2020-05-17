@@ -45,7 +45,7 @@ public class DiGraph {
 
     public void printEdges() {
         for (Node node : adjacencyMap.keySet()) {
-            System.out.print("The " + node.name + " has an edge towards: ");
+            System.out.print("The node " + node.name + " has an edge towards: ");
             for (Node neighbor : adjacencyMap.get(node)) {
                 System.out.print(neighbor.name + " ");
             }
