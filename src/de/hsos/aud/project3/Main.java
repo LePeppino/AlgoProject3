@@ -6,33 +6,42 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        DiGraph<Integer> graph = new DiGraph<>();
+        DiGraph<Integer> diGraph = new DiGraph<>();
 
-        graph.add(0);
-        graph.add(1);
-        graph.add(2);
-        graph.add(3);
+        /*
+        Adds and values to test diGraph functionality
+        *
 
-        graph.add(0, 1, 1);
-        graph.add(1, 2, 2);
-        graph.add(2, 3, 2);
-        graph.add(3, 0, 2);
-        graph.add(1, 3, 1);
-        graph.add(2, 1, 5);
+        diGraph.add(0);
+        diGraph.add(1);
+        diGraph.add(2);
+        diGraph.add(3);
+
+        diGraph.add(0, 1, 1);
+        diGraph.add(1, 2, 2);
+        diGraph.add(2, 3, 2);
+        diGraph.add(3, 0, 2);
+        diGraph.add(1, 3, 1);
+        diGraph.add(2, 1, 5);
 
 
-        System.out.println("The nr. of vertices is: " + graph.neighbors.keySet().size());
-        System.out.println("The nr. of edges is: " + graph.getNumberOfEdges()); // to be fixed
-        System.out.println("The current graph: " + graph);
-        System.out.println("In-degrees for 0: " + graph.inDegree(0));
-        System.out.println("Out-degrees for 0: " + graph.outDegree(0));
-        System.out.println("In-degrees for 3: " + graph.inDegree(3));
-        System.out.println("Out-degrees for 3: " + graph.outDegree(3));
-        System.out.println("Outbounds for 1: "+ graph.outboundNeighbors(1));
-        System.out.println("Inbounds for 1: "+ graph.inboundNeighbors(1));
-        System.out.println("(0,2)? " + (graph.isEdge(0, 2) ? "It's an edge" : "It's not an edge"));
-        System.out.println("(1,3)? " + (graph.isEdge(1, 3) ? "It's an edge" : "It's not an edge"));
+        System.out.println("The nr. of vertices is: " + diGraph.neighbors.keySet().size());
+        System.out.println("The nr. of edges is: " + diGraph.getNumberOfEdges());
+        System.out.println("The current diGraph: " + diGraph);
+        System.out.println("In-degrees for 0: " + diGraph.inDegree(0));
+        System.out.println("Out-degrees for 0: " + diGraph.outDegree(0));
+        System.out.println("In-degrees for 3: " + diGraph.inDegree(3));
+        System.out.println("Out-degrees for 3: " + diGraph.outDegree(3));
+        System.out.println("Outbounds for 1: "+ diGraph.outboundNeighbors(1));
+        System.out.println("Inbounds for 1: "+ diGraph.inboundNeighbors(1));
+        System.out.println("(0,2)? " + (diGraph.isEdge(0, 2) ? "It's an edge" : "It's not an edge"));
+        System.out.println("(1,3)? " + (diGraph.isEdge(1, 3) ? "It's an edge" : "It's not an edge"));
 
-        System.out.println("Cost for (1,3)? "+ graph.getCost(1, 3));
+        System.out.println("Cost for (1,3)? "+ diGraph.getCost(1, 3));
+
+        diGraph.toString();
+        */
+
+
     }
 }

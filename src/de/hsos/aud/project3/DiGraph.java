@@ -5,7 +5,7 @@ import java.util.*;
 public class DiGraph<V> {
 
     /**
-     * Edge as inner class to save some space
+     * Edge as inner class to avoid privacy policy
      */
 
     public static class Edge<V>{
@@ -24,6 +24,9 @@ public class DiGraph<V> {
             return cost;
         }
 
+        /**
+         * String representation of Edge
+         */
         @Override
         public String toString() {
             return "Edge [vertex=" + vertex + ", cost=" + cost + "]";
@@ -34,18 +37,18 @@ public class DiGraph<V> {
     /**
      * A Map is used to map each vertex to its list of adjacent vertices.
      */
-
     public Map<V, List<Edge<V>>> neighbors = new HashMap<V, List<Edge<V>>>();
 
     private int nr_edges;
 
     /**
-     * String representation of graph
+     * String representation of diGraph
      */
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         for (V v : neighbors.keySet())
-            s.append("\n    " + v + " -> " + neighbors.get(v));
+            s.append("\n ").append(v).append(" -> ").append(neighbors.get(v));
+        System.out.print(s); // actually prints diGraph in console
         return s.toString();
     }
 
