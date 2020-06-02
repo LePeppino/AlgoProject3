@@ -7,7 +7,6 @@ public class DiGraph<V> {
     /**
      * Edge as inner class to avoid privacy policy
      */
-
     public static class Edge<V>{
         private V vertex;
         private double cost;
@@ -37,7 +36,7 @@ public class DiGraph<V> {
     /**
      * A Map is used to map each vertex to its list of adjacent vertices.
      */
-    public Map<V, List<Edge<V>>> neighbors = new HashMap<V, List<Edge<V>>>();
+    public Map<V, List<Edge<V>>> neighbors = new HashMap<>();
 
     private int nr_edges;
 
@@ -48,7 +47,6 @@ public class DiGraph<V> {
         StringBuilder s = new StringBuilder();
         for (V v : neighbors.keySet())
             s.append("\n ").append(v).append(" -> ").append(neighbors.get(v));
-        System.out.print(s); // actually prints diGraph in console
         return s.toString();
     }
 
@@ -70,7 +68,7 @@ public class DiGraph<V> {
     }
 
     /**
-     * True iff graph contains vertex
+     * True if graph contains vertex
      */
     public boolean contains(V vertex) {
         return neighbors.containsKey(vertex);
@@ -86,7 +84,10 @@ public class DiGraph<V> {
         neighbors.get(from).add(new Edge<V>(to, cost));
     }
 
-    public int outDegree(int vertex) {
+    /**
+     * out- and inDegree gets the number of edges for a vertex
+     */
+    public int outDegree(V vertex) {
         return neighbors.get(vertex).size();
     }
 
@@ -104,13 +105,16 @@ public class DiGraph<V> {
     public List<V> inboundNeighbors(V inboundVertex) {
         List<V> inList = new ArrayList<V>();
         for (V to : neighbors.keySet()) {
-            for (Edge e : neighbors.get(to))
+            for (Edge<V> e : neighbors.get(to))
                 if (e.vertex.equals(inboundVertex))
                     inList.add(to);
         }
         return inList;
     }
 
+    /**
+     * true if two vertices have a common edge
+     */
     public boolean isEdge(V from, V to) {
         for(Edge<V> e :  neighbors.get(from)){
             if(e.vertex.equals(to))
