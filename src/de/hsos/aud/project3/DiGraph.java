@@ -95,6 +95,10 @@ public class DiGraph<V> {
         return inboundNeighbors(vertex).size();
     }
 
+    /**
+     * outbound and inboundNeighbors gets, which other vertices
+     * are connected to a vertex in outwards or inwards direction
+     */
     public List<V> outboundNeighbors(V vertex) {
         List<V> list = new ArrayList<V>();
         for(Edge<V> e: neighbors.get(vertex))
