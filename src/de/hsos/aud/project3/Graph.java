@@ -9,13 +9,18 @@ public class Graph<V> {
      */
     public static class Edge<V>{
         private V vertex;
+        private double cost;
 
-        public Edge(V v){
-            vertex = v;
+        public Edge(V v, double c){
+            vertex = v; cost = c;
         }
 
         public V getVertex() {
             return vertex;
+        }
+
+        public double getCost() {
+            return cost;
         }
 
         /**
@@ -23,7 +28,7 @@ public class Graph<V> {
          */
         @Override
         public String toString() {
-            return "Edge [vertex= " + vertex + "]";
+            return "Edge [vertex= " + vertex + ", cost=" + cost + "]";
         }
 
     }
@@ -73,10 +78,20 @@ public class Graph<V> {
      * Add an edge to the graph; if either vertex does not exist, it's added
      * This implementation allows the creation of multi-edges and self-loops
      */
+    public void add(V from, V to, double cost) {
+        this.add(from);
+        this.add(to);
+        neighbors.get(from).add(new Graph.Edge<V>(to, cost));
+    }
+
+    /**
+     * Overload add for inputs without a weight value
+     * Set cost = 1
+     */
     public void add(V from, V to) {
         this.add(from);
         this.add(to);
-        neighbors.get(from).add(new Edge<V>(to));
+        neighbors.get(from).add(new Graph.Edge<V>(to, 1));
     }
 
     /**
@@ -106,6 +121,14 @@ public class Graph<V> {
                 return true;
         }
         return false;
+    }
+
+    public double getCost(V from, V to) {
+        for(Graph.Edge<V> e :  neighbors.get(from)){
+            if(e.vertex.equals(to))
+                return e.cost;
+        }
+        return -1;
     }
 
 }

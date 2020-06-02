@@ -85,6 +85,16 @@ public class DiGraph<V> {
     }
 
     /**
+     * Overload add for inputs without a weight value
+     * Set cost = 1
+     */
+    public void add(V from, V to) {
+        this.add(from);
+        this.add(to);
+        neighbors.get(from).add(new DiGraph.Edge<V>(to, 1));
+    }
+
+    /**
      * out- and inDegree gets the number of edges for a vertex
      */
     public int outDegree(V vertex) {
