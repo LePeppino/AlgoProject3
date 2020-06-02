@@ -28,7 +28,7 @@ public class DiGraph<V> {
          */
         @Override
         public String toString() {
-            return "Edge [vertex=" + vertex + ", cost=" + cost + "]";
+            return "Edge [vertex= " + vertex + ", cost=" + cost + "]";
         }
 
     }
@@ -38,7 +38,7 @@ public class DiGraph<V> {
      */
     public Map<V, List<Edge<V>>> neighbors = new HashMap<>();
 
-    private int nr_edges;
+    private int nrEdges;
 
     /**
      * String representation of diGraph
@@ -56,7 +56,7 @@ public class DiGraph<V> {
     public void add(V vertex) {
         if (neighbors.containsKey(vertex))
             return;
-        neighbors.put(vertex, new ArrayList<Edge<V>>());
+        neighbors.put(vertex, new ArrayList<>());
     }
 
     public int getNumberOfEdges(){

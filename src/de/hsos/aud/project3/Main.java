@@ -7,10 +7,31 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         DiGraph<Integer> diGraph = new DiGraph<>();
+        Graph<Integer> graph = new Graph<>();
+
+        /*
+        Adds and values to test Graph functionality
+        */
+
+        graph.add(4);
+        graph.add(5);
+        graph.add(6);
+        graph.add(7);
+        graph.add(8);
+
+        graph.add(4, 5);
+        graph.add(6, 4);
+        graph.add(7, 8);
+        graph.add(5, 6);
+
+        System.out.println("The nr. of vertices is: " + graph.neighbors.keySet().size());
+        System.out.println("The nr. of edges is: " + graph.getNumberOfEdges());
+        System.out.println("\nThe current Graph:");
+        System.out.println(graph.toString() + " \n");
 
         /*
         Adds and values to test diGraph functionality
-        */
+        *
 
         diGraph.add(0);
         diGraph.add(1);
@@ -39,7 +60,7 @@ public class Main {
         System.out.println("(1,3)? " + (diGraph.isEdge(1, 3) ? "It's an edge" : "It's not an edge"));
 
         System.out.println("Cost for (1,3)? "+ diGraph.getCost(1, 3));
-        /**/
+        */
 
 
     }
