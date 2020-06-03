@@ -26,7 +26,7 @@ public class Dijkstra {
 
         final Map<Vertex<Integer>, CostPathPair<Integer>> map = new HashMap<>();
         for (CostVertexPair<Integer> pair : costs.values()) {
-            int cost = pair.getCost();
+            double cost = pair.getCost();
             Vertex<Integer> vertex = pair.getVertex();
             List<Edge<Integer>> path = paths.get(vertex);
             map.put(vertex, new CostPathPair<>(cost, path));
@@ -83,7 +83,7 @@ public class Dijkstra {
             for (Edge<Integer> e : vertex.getEdges()) {
                 final CostVertexPair<Integer> toPair = costs.get(e.getToVertex()); // O(1)
                 final CostVertexPair<Integer> lowestCostToThisVertex = costs.get(vertex); // O(1)
-                final int cost = lowestCostToThisVertex.getCost() + e.getCost();
+                final double cost = lowestCostToThisVertex.getCost() + e.getCost();
                 if (toPair.getCost() == Integer.MAX_VALUE) {
                     // Haven't seen this vertex yet
 

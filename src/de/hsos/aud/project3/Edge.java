@@ -1,12 +1,14 @@
 package de.hsos.aud.project3;
 
+import java.util.Objects;
+
 public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 
     public Vertex<T> from = null;
     public Vertex<T> to = null;
-    public int cost = 0;
+    public double cost = 0;
 
-    public Edge(int cost, Vertex<T> from, Vertex<T> to) {
+    public Edge(Vertex<T> from, Vertex<T> to, double cost) {
         if (from == null || to == null)
             throw (new NullPointerException("Both 'to' and 'from' vertices need to be non-NULL."));
 
@@ -16,10 +18,10 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
     }
 
     public Edge(Edge<T> e) {
-        this(e.cost, e.from, e.to);
+        this(e.from, e.to, e.cost);
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
@@ -37,8 +39,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 
     @Override
     public int hashCode() {
-        final int cost = (this.cost * (this.getFromVertex().hashCode() * this.getToVertex().hashCode()));
-        return 31 * cost;
+        return Objects.hash(from, to, cost);
     }
 
     @Override

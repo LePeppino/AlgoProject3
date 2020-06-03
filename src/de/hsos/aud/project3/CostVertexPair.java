@@ -1,8 +1,10 @@
 package de.hsos.aud.project3;
 
+import java.util.Objects;
+
 public class CostVertexPair<T extends Comparable<T>> implements Comparable<CostVertexPair<T>> {
 
-    private int cost = Integer.MAX_VALUE;
+    private double cost = Integer.MAX_VALUE;
     private Vertex<T> vertex = null;
 
     public CostVertexPair(int cost, Vertex<T> vertex) {
@@ -13,11 +15,11 @@ public class CostVertexPair<T extends Comparable<T>> implements Comparable<CostV
         this.vertex = vertex;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
@@ -27,7 +29,7 @@ public class CostVertexPair<T extends Comparable<T>> implements Comparable<CostV
 
     @Override
     public int hashCode() {
-        return 31 * (this.cost * ((this.vertex!=null)?this.vertex.hashCode():1));
+        return Objects.hash(cost, vertex);
     }
 
     @Override

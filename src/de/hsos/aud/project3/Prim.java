@@ -9,9 +9,9 @@ import java.util.*;
  */
 public class Prim {
 
-    private Prim() { }
+    public Prim() { }
 
-    public static CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph, Vertex<Integer> start) {
+    public CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph, Vertex<Integer> start) {
         if (graph == null)
             throw (new NullPointerException("Graph must be non-NULL."));
 
@@ -27,8 +27,8 @@ public class Prim {
 
         final List<Edge<Integer>> path = new ArrayList<Edge<Integer>>();
         final Queue<Edge<Integer>> edgesAvailable = new PriorityQueue<Edge<Integer>>();
-
         Vertex<Integer> vertex = start;
+
         while (!unvisited.isEmpty()) {
             // Add all edges to unvisited vertices
             for (Edge<Integer> e : vertex.getEdges()) {
@@ -37,7 +37,10 @@ public class Prim {
             }
 
             // Remove the lowest cost edge
-            final Edge<Integer> e = edgesAvailable.remove();
+            final Edge<Integer> e ;
+            while (!unvisited.contains(e.getToVertex())) {
+                e = edgesAvailable.remove();
+            }
             cost += e.getCost();
             path.add(e); // O(1)
 
@@ -45,6 +48,7 @@ public class Prim {
             unvisited.remove(vertex); // O(1)
         }
 
-        return (new CostPathPair<Integer>(cost, path));
+
+        return (new CostPathPair<>(cost, path));
     }
 }
