@@ -52,14 +52,22 @@ public class Main {
         }
         reader.close();
 
-        System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]");
+        System.out.println("Choose the Algorithm you would like to apply:" +
+                "\n(K)ruskal [Minimal Spanning Tree]" +
+                "\n(P)rim [Minimal Spanning Tree]" +
+                "\n(D)ijkstra [Shortest Path]");
         caseInput = input.next();
 
         switch (caseInput) {
+            case "K":
+                Graph graphKruskal = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
+                Kruskal kruskal = new Kruskal();
+                kruskal.getMinimumSpanningTree(graphKruskal).toString();
+                break;
             case "P":
-                Graph graph = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
+                Graph graphPrim = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
                 Prim prim = new Prim();
-                prim.getMinimumSpanningTree(graph, vertices.iterator().next()).toString();
+                prim.getMinimumSpanningTree(graphPrim, vertices.iterator().next()).toString();
                 break;
             case "D":
 
