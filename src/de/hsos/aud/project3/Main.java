@@ -9,6 +9,8 @@ public class Main {
         DiGraph<Integer> diGraph = new DiGraph<>();
         Graph<Integer> graph = new Graph<>();
 
+        MST prim = new MST();
+
         /*
         Adds and values to test Graph functionality
         */
