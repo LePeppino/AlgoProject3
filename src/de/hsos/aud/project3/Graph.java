@@ -75,7 +75,7 @@ public class Graph<T extends Comparable<T>> {
 
             from.addEdge(e);
             if (this.type == TYPE.UNDIRECTED) {
-                Edge<T> reciprical = new Edge<T>(e.cost, to, from);
+                Edge<T> reciprical = new Edge<T>(to, from, e.cost);
                 to.addEdge(reciprical);
                 this.allEdges.add(reciprical);
             }

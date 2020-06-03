@@ -9,9 +9,9 @@ import java.util.*;
  */
 public class Prim {
 
-    private Prim() { }
+    public Prim() { }
 
-    public static CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph, Vertex<Integer> start) {
+    public CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph, Vertex<Integer> start) {
         if (graph == null)
             throw (new NullPointerException("Graph must be non-NULL."));
 
