@@ -27,8 +27,8 @@ public class Prim {
 
         final List<Edge<Integer>> path = new ArrayList<Edge<Integer>>();
         final Queue<Edge<Integer>> edgesAvailable = new PriorityQueue<Edge<Integer>>();
-
         Vertex<Integer> vertex = start;
+
         while (!unvisited.isEmpty()) {
             // Add all edges to unvisited vertices
             for (Edge<Integer> e : vertex.getEdges()) {
@@ -45,6 +45,7 @@ public class Prim {
             unvisited.remove(vertex); // O(1)
         }
 
-        return (new CostPathPair<Integer>(cost, path));
+
+        return (new CostPathPair<>(cost, path));
     }
 }

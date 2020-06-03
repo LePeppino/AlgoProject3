@@ -11,6 +11,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        int vertex1;
+        int vertex2;
+        double weight;
         int numberOfVertices = 0;
         int numberOfEdges = 0;
         ArrayList<Vertex> vertices = new ArrayList<>();
@@ -41,17 +44,22 @@ public class Main {
         }
         //Filling the collection of Edges
         while (reader.hasNext()) {
-            edges.add(new Edge(new Vertex(reader.nextInt()), new Vertex(reader.nextInt()), reader.nextDouble()));
+            vertex1 = reader.nextInt();
+            vertex2 = reader.nextInt();
+            weight = reader.nextDouble();
+            Edge temp = new Edge(new Vertex(vertex1), new Vertex(vertex2), weight);
+            edges.add(temp);
         }
         reader.close();
 
-        System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]\n(M)ax Flow");
+        System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]");
+        caseInput = input.next();
 
         switch (caseInput) {
             case "P":
                 Graph graph = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
                 Prim prim = new Prim();
-                prim.getMinimumSpanningTree(graph, vertices.iterator().next());
+                prim.getMinimumSpanningTree(graph, vertices.iterator().next()).toString();
                 break;
             case "D":
 
