@@ -8,7 +8,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
     public Vertex<T> to = null;
     public double cost = 0;
 
-    public Edge(Vertex<T> from, Vertex<T> to, double weight) {
+    public Edge(Vertex<T> from, Vertex<T> to, double cost) {
         if (from == null || to == null)
             throw (new NullPointerException("Both 'to' and 'from' vertices need to be non-NULL."));
 

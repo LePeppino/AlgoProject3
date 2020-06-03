@@ -5,17 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        int vertex1;
+        int vertex2;
+        double weight;
         int numberOfVertices = 0;
         int numberOfEdges = 0;
-        Collection<Vertex> vertices = null;
-        Collection<Edge> edges = null;
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
 
         var input = new Scanner(System.in);
         Scanner reader = null;
@@ -26,7 +28,7 @@ public class Main {
         String path = input.nextLine();
 
         try {
-            reader = new Scanner(new File(path));
+            reader = new Scanner(new File(path)).useLocale(Locale.US);
         } catch (FileNotFoundException e) {
             System.out.println("Error: file not found");
             e.printStackTrace();
@@ -42,17 +44,22 @@ public class Main {
         }
         //Filling the collection of Edges
         while (reader.hasNext()) {
-            edges.add(new Edge(new Vertex(reader.nextInt()), new Vertex(reader.nextInt()), reader.nextDouble()));
+            vertex1 = reader.nextInt();
+            vertex2 = reader.nextInt();
+            weight = reader.nextDouble();
+            Edge temp = new Edge(new Vertex(vertex1), new Vertex(vertex2), weight);
+            edges.add(temp);
         }
         reader.close();
 
-        System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]\n(M)ax Flow");
+        System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]");
+        caseInput = input.next();
 
         switch (caseInput) {
             case "P":
                 Graph graph = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
                 Prim prim = new Prim();
-                prim.getMinimumSpanningTree(graph, vertices.iterator().next());
+                prim.getMinimumSpanningTree(graph, vertices.iterator().next()).toString();
                 break;
             case "D":
 
