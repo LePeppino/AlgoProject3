@@ -1,134 +1,160 @@
 package de.hsos.aud.project3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-public class Graph<V> {
+/**
+ * Graph could be directed or undirected depending on the TYPE enum.
+ */
+public class Graph<T extends Comparable<T>> {
 
-    /**
-     * Edge as inner class to avoid privacy policy
-     */
-    public static class Edge<V>{
-        private V vertex;
-        private double cost;
+    private List<Vertex<T>> allVertices = new ArrayList<Vertex<T>>();
+    private List<Edge<T>> allEdges = new ArrayList<Edge<T>>();
 
-        public Edge(V v, double c){
-            vertex = v; cost = c;
-        }
-
-        public V getVertex() {
-            return vertex;
-        }
-
-        public double getCost() {
-            return cost;
-        }
-
-        /**
-         * String representation of Edge
-         */
-        @Override
-        public String toString() {
-            return "Edge [vertex= " + vertex + ", cost=" + cost + "]";
-        }
-
+    public enum TYPE {
+        DIRECTED, UNDIRECTED
     }
 
     /**
-     * A Map is used to map each vertex to its list of adjacent vertices.
+     * Defaulted to undirected
      */
-    public Map<V, List<Edge<V>>> neighbors = new HashMap<>();
+    private TYPE type = TYPE.UNDIRECTED;
 
-    private int nrEdges;
+    public Graph() {
+    }
+
+    public Graph(TYPE type) {
+        this.type = type;
+    }
 
     /**
-     * String representation of Graph
+     * Deep copies
      */
+    public Graph(Graph<T> g) {
+        type = g.getType();
+
+        // Copy the vertices which also copies the edges
+        for (Vertex<T> v : g.getVertices())
+            this.allVertices.add(new Vertex<T>(v));
+
+        for (Vertex<T> v : this.getVertices()) {
+            for (Edge<T> e : v.getEdges()) {
+                this.allEdges.add(e);
+            }
+        }
+    }
+
+    /**
+     * Creates a Graph from the vertices and edges. This defaults to an undirected Graph
+     * NOTE: Duplicate vertices and edges ARE allowed.
+     * NOTE: Copies the vertex and edge objects but does NOT store the Collection parameters itself.
+     */
+    public Graph(Collection<Vertex<T>> vertices, Collection<Edge<T>> edges) {
+        this(TYPE.UNDIRECTED, vertices, edges);
+    }
+
+    /**
+     * Creates a Graph from the vertices and edges.
+     * NOTE: Duplicate vertices and edges ARE allowed.
+     * NOTE: Copies the vertex and edge objects but does NOT store the Collection parameters itself.
+     */
+    public Graph(TYPE type, Collection<Vertex<T>> vertices, Collection<Edge<T>> edges) {
+        this(type);
+
+        this.allVertices.addAll(vertices);
+        this.allEdges.addAll(edges);
+
+        for (Edge<T> e : edges) {
+            final Vertex<T> from = e.from;
+            final Vertex<T> to = e.to;
+
+            if (!this.allVertices.contains(from) || !this.allVertices.contains(to))
+                continue;
+
+            from.addEdge(e);
+            if (this.type == TYPE.UNDIRECTED) {
+                Edge<T> reciprical = new Edge<T>(e.cost, to, from);
+                to.addEdge(reciprical);
+                this.allEdges.add(reciprical);
+            }
+        }
+    }
+
+    public TYPE getType() {
+        return type;
+    }
+
+    public List<Vertex<T>> getVertices() {
+        return allVertices;
+    }
+
+    public List<Edge<T>> getEdges() {
+        return allEdges;
+    }
+
+    @Override
+    public int hashCode() {
+        int code = this.type.hashCode() + this.allVertices.size() + this.allEdges.size();
+        for (Vertex<T> v : allVertices)
+            code *= v.hashCode();
+        for (Edge<T> e : allEdges)
+            code *= e.hashCode();
+        return 31 * code;
+    }
+
+    @Override
+    public boolean equals(Object g1) {
+        if (!(g1 instanceof Graph))
+            return false;
+
+        final Graph<T> g = (Graph<T>) g1;
+
+        final boolean typeEquals = this.type == g.type;
+        if (!typeEquals)
+            return false;
+
+        final boolean verticesSizeEquals = this.allVertices.size() == g.allVertices.size();
+        if (!verticesSizeEquals)
+            return false;
+
+        final boolean edgesSizeEquals = this.allEdges.size() == g.allEdges.size();
+        if (!edgesSizeEquals)
+            return false;
+
+        // Vertices can contain duplicates and appear in different order but both arrays should contain the same elements
+        final Object[] ov1 = this.allVertices.toArray();
+        Arrays.sort(ov1);
+        final Object[] ov2 = g.allVertices.toArray();
+        Arrays.sort(ov2);
+        for (int i = 0; i < ov1.length; i++) {
+            final Vertex<T> v1 = (Vertex<T>) ov1[i];
+            final Vertex<T> v2 = (Vertex<T>) ov2[i];
+            if (!v1.equals(v2))
+                return false;
+        }
+
+        // Edges can contain duplicates and appear in different order but both arrays should contain the same elements
+        final Object[] oe1 = this.allEdges.toArray();
+        Arrays.sort(oe1);
+        final Object[] oe2 = g.allEdges.toArray();
+        Arrays.sort(oe2);
+        for (int i = 0; i < oe1.length; i++) {
+            final Edge<T> e1 = (Edge<T>) oe1[i];
+            final Edge<T> e2 = (Edge<T>) oe2[i];
+            if (!e1.equals(e2))
+                return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (V v : neighbors.keySet())
-            s.append("\n ").append(v).append(" -> ").append(neighbors.get(v));
-        return s.toString();
+        final StringBuilder builder = new StringBuilder();
+        for (Vertex<T> v : allVertices)
+            builder.append(v.toString());
+        return builder.toString();
     }
-
-    /**
-     * Add a vertex to the graph. Nothing happens if vertex is already in graph
-     */
-    public void add(V vertex) {
-        if (neighbors.containsKey(vertex))
-            return;
-        neighbors.put(vertex, new ArrayList<>());
-    }
-
-    public int getNumberOfEdges(){
-        int sum = 0;
-        for(List<Edge<V>> outBounds : neighbors.values()){
-            sum += outBounds.size();
-        }
-        return sum;
-    }
-
-    /**
-     * True if graph contains vertex
-     */
-    public boolean contains(V vertex) {
-        return neighbors.containsKey(vertex);
-    }
-
-    /**
-     * Add an edge to the graph; if either vertex does not exist, it's added
-     * This implementation allows the creation of multi-edges and self-loops
-     */
-    public void add(V from, V to, double cost) {
-        this.add(from);
-        this.add(to);
-        neighbors.get(from).add(new Graph.Edge<V>(to, cost));
-    }
-
-    /**
-     * Overload add for inputs without a weight value
-     * Set cost = 1
-     */
-    public void add(V from, V to) {
-        this.add(from);
-        this.add(to);
-        neighbors.get(from).add(new Graph.Edge<V>(to, 1));
-    }
-
-    /**
-     * getDegree gets the number of edges for a vertex
-     */
-    public int getDegree(V vertex) {
-        return neighbors.get(vertex).size();
-    }
-
-    /**
-     * getNeighbors gets, which other vertices
-     * are connected to a vertex
-     */
-    public List<V> getNeighbors(V vertex) {
-        List<V> list = new ArrayList<V>();
-        for(Edge<V> e: neighbors.get(vertex))
-            list.add(e.vertex);
-        return list;
-    }
-
-    /**
-     * true if two vertices have a common edge
-     */
-    public boolean isEdge(V from, V to) {
-        for(Edge<V> e :  neighbors.get(from)){
-            if(e.vertex.equals(to))
-                return true;
-        }
-        return false;
-    }
-
-    public double getCost(V from, V to) {
-        for(Graph.Edge<V> e :  neighbors.get(from)){
-            if(e.vertex.equals(to))
-                return e.cost;
-        }
-        return -1;
-    }
-
 }
