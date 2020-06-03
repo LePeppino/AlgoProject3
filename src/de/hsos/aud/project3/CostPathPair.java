@@ -2,13 +2,14 @@ package de.hsos.aud.project3;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class CostPathPair<T extends Comparable<T>> {
 
-    private int cost = 0;
+    private double cost = 0;
     private List<Edge<T>> path = null;
 
-    public CostPathPair(int cost, List<Edge<T>> path) {
+    public CostPathPair(double cost, List<Edge<T>> path) {
         if (path == null)
             throw (new NullPointerException("path cannot be NULL."));
 
@@ -16,11 +17,11 @@ public class CostPathPair<T extends Comparable<T>> {
         this.path = path;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
@@ -29,32 +30,24 @@ public class CostPathPair<T extends Comparable<T>> {
     }
 
     @Override
-    public int hashCode() {
-        int hash = this.cost;
-        for (Edge<T> e : path)
-            hash *= e.cost;
-        return 31 * hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CostPathPair<?> that = (CostPathPair<?>) o;
+
+        if (Double.compare(that.cost, cost) != 0) return false;
+        return Objects.equals(path, that.path);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof CostPathPair))
-            return false;
-
-        final CostPathPair<?> pair = (CostPathPair<?>) obj;
-        if (this.cost != pair.cost)
-            return false;
-
-        final Iterator<?> iter1 = this.getPath().iterator();
-        final Iterator<?> iter2 = pair.getPath().iterator();
-        while (iter1.hasNext() && iter2.hasNext()) {
-            Edge<T> e1 = (Edge<T>) iter1.next();
-            Edge<T> e2 = (Edge<T>) iter2.next();
-            if (!e1.equals(e2))
-                return false;
-        }
-
-        return true;
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(cost);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (path != null ? path.hashCode() : 0);
+        return result;
     }
 
     @Override

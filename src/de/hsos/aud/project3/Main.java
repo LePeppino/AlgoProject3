@@ -37,7 +37,7 @@ public class Main {
         numberOfEdges = reader.nextInt();
 
         //Fill the Collection with Vertices
-        for(int i = 0; i < numberOfVertices; i++){
+        for (int i = 0; i < numberOfVertices; i++) {
             vertices.add(new Vertex(i));
         }
         //Filling the collection of Edges
@@ -48,12 +48,14 @@ public class Main {
 
         System.out.println("Choose the Algorithm you would like to apply:\n(P)rim [Minimal Spanning Tree]\n(D)ijkstra [Shortest Path]\n(M)ax Flow");
 
-        switch(caseInput){
+        switch (caseInput) {
             case "P":
                 Graph graph = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
                 Prim prim = new Prim();
                 prim.getMinimumSpanningTree(graph, vertices.iterator().next());
+                break;
             case "D":
+
 
         }
 
