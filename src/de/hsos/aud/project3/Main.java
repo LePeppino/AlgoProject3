@@ -5,17 +5,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
         int numberOfVertices = 0;
         int numberOfEdges = 0;
-        Collection<Vertex> vertices = null;
-        Collection<Edge> edges = null;
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
 
         var input = new Scanner(System.in);
         Scanner reader = null;
@@ -26,7 +25,7 @@ public class Main {
         String path = input.nextLine();
 
         try {
-            reader = new Scanner(new File(path));
+            reader = new Scanner(new File(path)).useLocale(Locale.US); // for reading double values from file
         } catch (FileNotFoundException e) {
             System.out.println("Error: file not found");
             e.printStackTrace();
