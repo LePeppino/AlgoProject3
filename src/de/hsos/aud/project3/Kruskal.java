@@ -41,7 +41,7 @@ public class Kruskal {
             if (!isTheSamePart(edge.getFromVertex(), edge.getToVertex(), membershipMap)) {
                 union(edge.getFromVertex(), edge.getToVertex(), membershipMap);
                 path.add(edge);
-                cost += edge.getCost();
+                cost += edge.getCost(); // doesn't add anything at any time :(
             }
         }
 

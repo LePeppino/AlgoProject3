@@ -25,7 +25,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
