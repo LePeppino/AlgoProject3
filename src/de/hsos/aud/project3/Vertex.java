@@ -65,44 +65,6 @@ public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>> {
     }
 
     @Override
-    public int hashCode() {
-        final int code = this.value.hashCode() + this.weight + this.edges.size();
-        return 31 * code;
-    }
-
-    @Override
-    public boolean equals(Object v1) {
-        if (!(v1 instanceof Vertex))
-            return false;
-
-        final Vertex<T> v = (Vertex<T>) v1;
-
-        final boolean weightEquals = this.weight == v.weight;
-        if (!weightEquals)
-            return false;
-
-        final boolean edgesSizeEquals = this.edges.size() == v.edges.size();
-        if (!edgesSizeEquals)
-            return false;
-
-        final boolean valuesEquals = this.value.equals(v.value);
-        if (!valuesEquals)
-            return false;
-
-        final Iterator<Edge<T>> iter1 = this.edges.iterator();
-        final Iterator<Edge<T>> iter2 = v.edges.iterator();
-        while (iter1.hasNext() && iter2.hasNext()) {
-            // Only checking the cost
-            final Edge<T> e1 = iter1.next();
-            final Edge<T> e2 = iter2.next();
-            if (e1.cost != e2.cost)
-                return false;
-        }
-
-        return true;
-    }
-
-    @Override
     public int compareTo(Vertex<T> v) {
         final int valueComp = this.value.compareTo(v.value);
         if (valueComp != 0)
