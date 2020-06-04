@@ -1,27 +1,25 @@
 package de.hsos.aud.project3;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        int vertex1;
-        int vertex2;
+        Vertex from;
+        Vertex to;
         double weight;
         int numberOfVertices = 0;
         int numberOfEdges = 0;
-        ArrayList<Vertex> vertices = new ArrayList<>();
-        ArrayList<Edge> edges = new ArrayList<>();
+        List<Vertex> vertices = new ArrayList<Vertex>();
+        List<Edge> edges = new ArrayList<Edge>();
 
         var input = new Scanner(System.in);
         Scanner reader = null;
-        String caseInput = "whatever";
+        String caseInput;
 
         System.out.println("Specify absolute path to the file containing the graph:");
 
@@ -38,16 +36,17 @@ public class Main {
         numberOfVertices = reader.nextInt();
         numberOfEdges = reader.nextInt();
 
-        //Fill the Collection with Vertices
-        for (int i = 0; i < numberOfVertices; i++) {
-            vertices.add(new Vertex(i));
-        }
-        //Filling the collection of Edges
+        //Filling the collection with vertices
+        //Filling the collection with edges
         while (reader.hasNext()) {
-            vertex1 = reader.nextInt();
-            vertex2 = reader.nextInt();
+            from = new Vertex(reader.nextInt());
+            to = new Vertex(reader.nextInt());
             weight = reader.nextDouble();
-            Edge temp = new Edge(new Vertex(vertex1), new Vertex(vertex2), weight);
+            Edge temp = new Edge(from,to, weight);
+            from.addEdge(temp);
+            to.addEdge(temp);
+            vertices.add(from);
+            vertices.add(to);
             edges.add(temp);
         }
         reader.close();
@@ -60,14 +59,9 @@ public class Main {
 
         switch (caseInput) {
             case "K":
-                Graph graphKruskal = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
+                Graph<Integer> graphKruskal = new Graph(vertices, edges);
                 Kruskal kruskal = new Kruskal();
-                kruskal.getMinimumSpanningTree(graphKruskal).toString();
-                break;
-            case "P":
-                Graph graphPrim = new Graph(Graph.TYPE.UNDIRECTED, vertices, edges);
-                Prim prim = new Prim();
-                prim.getMinimumSpanningTree(graphPrim, vertices.iterator().next()).toString();
+                System.out.println(kruskal.getMinimumSpanningTree(graphKruskal).toString());
                 break;
             case "D":
 
