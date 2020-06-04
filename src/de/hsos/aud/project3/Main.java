@@ -2,20 +2,19 @@ package de.hsos.aud.project3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        Vertex from;
-        Vertex to;
+    public static void main(String[] args){
+        Vertex<Integer> from;
+        Vertex<Integer> to;
         double weight;
         int numberOfVertices = 0;
         int numberOfEdges = 0;
-        List<Vertex> vertices = new ArrayList<Vertex>();
-        List<Edge> edges = new ArrayList<Edge>();
+        List<Vertex<Integer>> vertices = new ArrayList<>();
+        List<Edge<Integer>> edges = new ArrayList<>();
 
         var input = new Scanner(System.in);
         Scanner reader = null;
@@ -39,10 +38,10 @@ public class Main {
         //Filling the collection with vertices
         //Filling the collection with edges
         while (reader.hasNext()) {
-            from = new Vertex(reader.nextInt());
-            to = new Vertex(reader.nextInt());
+            from = new Vertex<>(reader.nextInt());
+            to = new Vertex<>(reader.nextInt());
             weight = reader.nextDouble();
-            Edge temp = new Edge(from,to, weight);
+            Edge<Integer> temp = new Edge<>(from,to, weight);
             from.addEdge(temp);
             to.addEdge(temp);
             vertices.add(from);
@@ -58,9 +57,9 @@ public class Main {
 
         switch (caseInput) {
             case "K":
-                Graph<Integer> graphKruskal = new Graph(vertices, edges);
-                Kruskal kruskal = new Kruskal();
-                System.out.println(kruskal.getMinimumSpanningTree(graphKruskal).toString());
+                Graph<Integer> graphKruskal = new Graph<>(Graph.TYPE.UNDIRECTED, vertices, edges);
+                Kruskal kruskalAlgo = new Kruskal();
+                System.out.println(kruskalAlgo.getMinimumSpanningTree(graphKruskal).toString());
                 break;
             case "D":
 
