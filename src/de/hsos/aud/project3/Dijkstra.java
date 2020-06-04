@@ -16,9 +16,9 @@ import java.util.Queue;
  */
 public class Dijkstra {
 
-    private Dijkstra() { }
+    public Dijkstra() { }
 
-    public static Map<Vertex<Integer>, CostPathPair<Integer>> getShortestPaths(Graph<Integer> graph, Vertex<Integer> start) {
+    public Map<Vertex<Integer>, CostPathPair<Integer>> getShortestPaths(Graph<Integer> graph, Vertex<Integer> start) {
         final Map<Vertex<Integer>, List<Edge<Integer>>> paths = new HashMap<>();
         final Map<Vertex<Integer>, CostVertexPair<Integer>> costs = new HashMap<>();
 
@@ -34,7 +34,7 @@ public class Dijkstra {
         return map;
     }
 
-    public static CostPathPair<Integer> getShortestPath(Graph<Integer> graph, Vertex<Integer> start, Vertex<Integer> end) {
+    public CostPathPair<Integer> getShortestPath(Graph<Integer> graph, Vertex<Integer> start, Vertex<Integer> end) {
         if (graph == null)
             throw (new NullPointerException("Graph must be non-NULL."));
 
@@ -48,7 +48,7 @@ public class Dijkstra {
         return getShortestPath(graph, start, end, paths, costs);
     }
 
-    private static CostPathPair<Integer> getShortestPath(Graph<Integer> graph,
+    private CostPathPair<Integer> getShortestPath(Graph<Integer> graph,
                                                                Vertex<Integer> start, Vertex<Integer> end,
                                                                Map<Vertex<Integer>, List<Edge<Integer>>> paths,
                                                                Map<Vertex<Integer>, CostVertexPair<Integer>> costs) {

@@ -62,6 +62,10 @@ public class Main {
                 System.out.println(kruskalAlgo.getMinimumSpanningTree(graphKruskal).toString());
                 break;
             case "D":
+                Graph<Integer> graphDijkstra = new Graph<>(Graph.TYPE.UNDIRECTED, vertices, edges);
+                Dijkstra dijkstraAlgo = new Dijkstra();
+                System.out.println(dijkstraAlgo.getShortestPaths(graphDijkstra,
+                                                                vertices.get(0)));
 
 
         }
