@@ -53,7 +53,6 @@ public class Main {
 
         System.out.println("Choose the Algorithm you would like to apply:" +
                 "\n(K)ruskal [Minimal Spanning Tree]" +
-                "\n(P)rim [Minimal Spanning Tree]" +
                 "\n(D)ijkstra [Shortest Path]");
         caseInput = input.next();
 
